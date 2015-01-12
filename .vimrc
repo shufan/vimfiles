@@ -1,5 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+let $GIT_SSL_NO_VERIFY = 'true'
 
 " set the runtime path to include Vundle and initialize
 if has('win32')
@@ -36,7 +37,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/nerdtree'
 " NERDTree customization START
@@ -206,13 +206,7 @@ elseif has('unix')
     syntax enable
     colorscheme Tomorrow-Night
     set cursorline
-    set guifont=Inconsolata\ 12
-    " change the shape of gnome terminal cursor in different modes
-    if has("autocmd")
-        au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
-        au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-        au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
-    endif
+    set guifont=Inconsolata\ 13
 endif
 
 " Setting some OS-agnostic VIM settings
