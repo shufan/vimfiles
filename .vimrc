@@ -238,11 +238,10 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
 set wrap                        " wrap text
+set textwidth=79                " wrap text as close to 79 characters as white space allows
 set formatoptions=qrn1          " automatically wrap text without
 set list
 set listchars=tab:▸\ ,eol:¬
-set binary                      " prevent automatic newline at end of file"
-set noeol
 
 " Working with splits
 nnoremap <leader>w <C-w>v<C-w>l " create vertical split and switch to it with ,w
