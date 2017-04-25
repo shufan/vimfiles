@@ -34,7 +34,10 @@ Plugin 'gmarik/Vundle.vim'
 " Plugin 'user/L9', {'name': 'newL9'}
 
 " My Plugins begin here
+Plugin 'morhetz/gruvbox'
 Plugin 'jlanzarotta/bufexplorer'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Raimondi/delimitMate'
@@ -69,7 +72,8 @@ let g:lightline = {
       \ 'component_type': {
       \   'syntastic': 'error',
       \ },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
 function! MyModified()
@@ -77,7 +81,7 @@ function! MyModified()
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'help' && &readonly ? 'RO' : ''
+  return &ft !~? 'help' && &readonly ? '' : ''
 endfunction
 
 function! MyFilename()
@@ -93,10 +97,18 @@ function! MyFilename()
         \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
+"function! MyFugitive()
+  "if exists("*fugitive#head")
+    "let _ = fugitive#head()
+    "return strlen(_) ? ''._ : ''
+  "endif
+  "return ''
+"endfunction
+
 function! MyFugitive()
   try
     if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ''  " edit here for cool mark
+      let mark = ''  " edit here for cool mark
       let _ = fugitive#head()
       return strlen(_) ? mark._ : ''
     endif
@@ -145,6 +157,8 @@ let g:ctrlp_status_func = {
   \ 'prog': 'CtrlPStatusFunc_2',
   \ }
 
+let g:ctrlp_working_path_mode = 'ca'
+
 function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
   let g:lightline.ctrlp_regex = a:regex
   let g:lightline.ctrlp_prev = a:prev
@@ -188,9 +202,9 @@ filetype plugin indent on    " required
 if has('win32')
     if has('gui_running')
         syntax enable
-        colorscheme Tomorrow-Night
+        colorscheme gruvbox
         set cursorline
-        set guifont=Consolas:h9
+        set guifont=Hack:h9
     endif
 elseif has('unix')
     set t_Co=256
@@ -238,7 +252,7 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
 set wrap                        " wrap text
-set textwidth=79                " wrap text as close to 79 characters as white space allows
+set textwidth=119                " wrap text as close to 79 characters as white space allows
 set formatoptions=qrn1          " automatically wrap text without
 set list
 set listchars=tab:▸\ ,eol:¬
@@ -262,6 +276,12 @@ inoremap <right> <nop>
 
 " Used to enable XAML syntax highlighting by setting the filetype to XML
 au BufNewFile,BufRead *.xaml set filetype=xml
+
+" Customize gitgutter symbols
+let g:gitgutter_sign_added = 'xx'
+let g:gitgutter_sign_modified = 'yy'
+let g:gitgutter_sign_removed = 'zz'
+let g:gitgutter_sign_modified_removed = 'ww'
 
 " Set window size for GUI mode vs vim mode
 if has("gui_running")
