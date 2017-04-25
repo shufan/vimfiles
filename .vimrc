@@ -2,6 +2,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 let $GIT_SSL_NO_VERIFY = 'true'
 
+" VUNDLE PLUGINS
 " set the runtime path to include Vundle and initialize
 if has('win32')
     set rtp+=~/vimfiles/bundle/Vundle.vim/
@@ -33,17 +34,25 @@ Plugin 'gmarik/Vundle.vim'
 " Avoid a name conflict with L9
 " Plugin 'user/L9', {'name': 'newL9'}
 
-" My Plugins begin here
+ "My Plugins begin here
 Plugin 'morhetz/gruvbox'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-" vim-gitgutter customization START
-" vim-gitgutter customization END
+Plugin 'tpope/vim-commentary'
+
+Plugin 'mhinz/vim-signify'
+" vim-signify customization START
+let g:signify_realtime = 1
+" vim-signify customization END
 
 Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'Raimondi/delimitMate'
+
+Plugin 'kien/rainbow_parentheses.vim'
+" rainbow_parentheses customization START
+" Needs to be done after syntax enable for plugin rainbow_parentheses.vim so search for further references to rainbow_parentheses.
+" rainbow_parentheses customization END
+
 Plugin 'scrooloose/nerdtree'
 " NERDTree customization START
 " automatically open NERDTree if vim started with no files specified
@@ -52,6 +61,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " map Ctrl+n as a shortcut to open NERDTree
 map <C-n> :NERDTreeToggle<CR>
 " NERDTree customization END
+
 Plugin 'bling/vim-airline'
 " airline customization START
 let g:airline_powerline_fonts = 1
@@ -71,6 +81,7 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+" My Plugins end here
 
 " Setting some OS-specific VIM settings
 if has('win32')
@@ -88,9 +99,19 @@ elseif has('unix')
     set guifont=Inconsolata\ 13
 endif
 
+" rainbow_parentheses customization START
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+" rainbow_parentheses customization END
+
 " Setting some OS-agnostic VIM settings
 set noswapfile
-set undofile
+if has("persistent_undo")
+    set undodir=~/.undodir/     " store all undo history files together
+    set undofile
+endif
 let mapleader = ","             " remap leader key to comma
 set timeout timeoutlen=1500     " lengthen timeout for key combinations
 set relativenumber              " use relative line numbers
@@ -183,3 +204,4 @@ if has("autocmd")
 
       autocmd Syntax gitcommit setlocal textwidth=74
 endif " has("autocmd")
+
