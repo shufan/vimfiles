@@ -39,14 +39,14 @@ Plugin 'morhetz/gruvbox'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-sleuth'
+Plugin 'kien/ctrlp.vim'
+Plugin 'Raimondi/delimitMate'
 
 Plugin 'mhinz/vim-signify'
 " vim-signify customization START
 let g:signify_realtime = 1
 " vim-signify customization END
-
-Plugin 'kien/ctrlp.vim'
-Plugin 'Raimondi/delimitMate'
 
 Plugin 'kien/rainbow_parentheses.vim'
 " rainbow_parentheses customization START
@@ -85,40 +85,31 @@ filetype plugin indent on    " required
 
 " Setting some OS-specific VIM settings
 if has('win32')
-    if has('gui_running')
-        syntax enable
-        colorscheme gruvbox
-        set cursorline
-        set guifont=Hack:h9
-    endif
+  if has('gui_running')
+    colorscheme gruvbox
+    set guifont=Hack:h9
+    set undodir=$HOME\.vim\.undodir " store all undo history files together. make sure this dir exists.
+  endif
 elseif has('unix')
-    set t_Co=256
-    syntax enable
-    colorscheme Tomorrow-Night
-    set cursorline
-    set guifont=Inconsolata\ 13
+  set t_Co=256
+  colorscheme gruvbox
+  set guifont=Inconsolata\ 13
+  set undodir=~/.undodir/           " store all undo history files together. make sure this dir exists.
 endif
 
+" Setting some OS-agnostic VIM settings
+syntax enable
 " rainbow_parentheses customization START
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 " rainbow_parentheses customization END
-
-" Setting some OS-agnostic VIM settings
+set cursorline
+set undofile
 set noswapfile
-if has("persistent_undo")
-    set undodir=~/.undodir/     " store all undo history files together
-    set undofile
-endif
 let mapleader = ","             " remap leader key to comma
 set timeout timeoutlen=1500     " lengthen timeout for key combinations
-set relativenumber              " use relative line numbers
-set tabstop=4                   " set tab to 4 spaces
-set shiftwidth=4                " change number of spaces inserted for indentation to match tab
-set softtabstop=4               " set softtab to 4 spaces
-set expandtab                   " expand tab to spaces
 set ai                          " set auto-indenting on for programming
 set showmatch                   " automatically show matching brackets. works like it does in bbedit.
 set hlsearch                    " highlight search results
@@ -182,26 +173,26 @@ endif
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-    "Set UTF-8 as the default encoding for commit messages
-    autocmd BufReadPre COMMIT_EDITMSG,git-rebase-todo setlocal fileencodings=utf-8
+  "Set UTF-8 as the default encoding for commit messages
+  autocmd BufReadPre COMMIT_EDITMSG,git-rebase-todo setlocal fileencodings=utf-8
 
-    "Remember the positions in files with some git-specific exceptions"
-    autocmd BufReadPost *
-      \ if line("'\"") > 0 && line("'\"") <= line("$")
-      \           && expand("%") !~ "COMMIT_EDITMSG"
-      \           && expand("%") !~ "ADD_EDIT.patch"
-      \           && expand("%") !~ "addp-hunk-edit.diff"
-      \           && expand("%") !~ "git-rebase-todo" |
-      \   exe "normal g`\"" |
-      \ endif
+  "Remember the positions in files with some git-specific exceptions"
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$")
+    \           && expand("%") !~ "COMMIT_EDITMSG"
+    \           && expand("%") !~ "ADD_EDIT.patch"
+    \           && expand("%") !~ "addp-hunk-edit.diff"
+    \           && expand("%") !~ "git-rebase-todo" |
+    \   exe "normal g`\"" |
+    \ endif
 
-      autocmd BufNewFile,BufRead *.patch set filetype=diff
-      autocmd BufNewFile,BufRead *.diff set filetype=diff
+    autocmd BufNewFile,BufRead *.patch set filetype=diff
+    autocmd BufNewFile,BufRead *.diff set filetype=diff
 
-      autocmd Syntax diff
-      \ highlight WhiteSpaceEOL ctermbg=red |
-      \ match WhiteSpaceEOL /\(^+.*\)\@<=\s\+$/
+    autocmd Syntax diff
+    \ highlight WhiteSpaceEOL ctermbg=red |
+    \ match WhiteSpaceEOL /\(^+.*\)\@<=\s\+$/
 
-      autocmd Syntax gitcommit setlocal textwidth=74
+    autocmd Syntax gitcommit setlocal textwidth=74
 endif " has("autocmd")
 
