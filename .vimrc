@@ -40,8 +40,12 @@ Plugin 'jlanzarotta/bufexplorer'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-sleuth'
-Plugin 'kien/ctrlp.vim'
 Plugin 'Raimondi/delimitMate'
+
+Plugin 'kien/ctrlp.vim'
+" ctrlp customization START
+let g:ctrlp_working_path_mode = 'ca'
+" ctrlp customization END
 
 Plugin 'mhinz/vim-signify'
 " vim-signify customization START
