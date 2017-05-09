@@ -1,100 +1,73 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
 let $GIT_SSL_NO_VERIFY = 'true'
 
-" VUNDLE PLUGINS
-" set the runtime path to include Vundle and initialize
 if has('win32')
-    set rtp+=~/vimfiles/bundle/Vundle.vim/
-    let path='~/vimfiles/bundle'
-    call vundle#begin(path)
+  let vimPlugBeginPath='~/vimfiles/plugged'
+  " vim-plug must be installed manually by running the following commands in powershell
+  " md ~\vimfiles\autoload
+  " $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  " (New-Object Net.WebClient).DownloadFile($uri, $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("~\vimfiles\autoload\plug.vim"))
 elseif has('unix')
-    set rtp+=~/.vim/bundle/Vundle.vim/
-    call vundle#begin()
+  let vimPlugBeginpath='~/.vim/plugged'
+  " vim-plug (https://github.com/junegunn/vim-plug) settings
+  " Automatically install vim-plug and run PlugInstall if vim-plug not found
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+  endif
 endif
-" alternatively, pass a path where Vundle should install plugins
-" call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" vim-plug begin
+call plug#begin(vimPlugBeginPath)
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
+Plug 'morhetz/gruvbox'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-vinegar'
+Plug 'scrooloose/nerdcommenter'
+Plug 'Raimondi/delimitMate'
 
- "My Plugins begin here
-Plugin 'morhetz/gruvbox'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-vinegar'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Raimondi/delimitMate'
-
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 " ctrlp customization START
 let g:ctrlp_working_path_mode = 'ca'
 " ctrlp customization END
 
-Plugin 'mhinz/vim-signify'
+Plug 'mhinz/vim-signify'
 " vim-signify customization START
 let g:signify_realtime = 1
 " vim-signify customization END
 
-Plugin 'kien/rainbow_parentheses.vim'
+Plug 'kien/rainbow_parentheses.vim'
 " rainbow_parentheses customization START
 " Needs to be done after syntax enable for plugin rainbow_parentheses.vim so search for further references to rainbow_parentheses.
 " rainbow_parentheses customization END
 
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 " airline customization START
 let g:airline_powerline_fonts = 1
 " airline customization END
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-" My Plugins end here
+" vim-plug end
+call plug#end()
 
 " Setting some OS-specific VIM settings
 if has('win32')
   if has('gui_running')
     colorscheme gruvbox
     set guifont=Hack:h9
-    set undodir=$HOME\.vim\.undodir " store all undo history files together. make sure this dir exists.
+    set undodir=~/vimfiles/.undodir " store all undo history files together. make sure this dir exists.
   endif
 elseif has('unix')
   set t_Co=256
   colorscheme gruvbox
   set guifont=Inconsolata\ 13
-  set undodir=~/.undodir/           " store all undo history files together. make sure this dir exists.
+  set undodir=~/.vim/.undodir/     " store all undo history files together. make sure this dir exists.
 endif
 
 " Setting some OS-agnostic VIM settings
-syntax enable
+"
 " rainbow_parentheses customization START
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
