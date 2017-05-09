@@ -38,8 +38,9 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-sleuth'
+Plugin 'tpope/vim-vinegar'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'Raimondi/delimitMate'
 
 Plugin 'kien/ctrlp.vim'
@@ -56,15 +57,6 @@ Plugin 'kien/rainbow_parentheses.vim'
 " rainbow_parentheses customization START
 " Needs to be done after syntax enable for plugin rainbow_parentheses.vim so search for further references to rainbow_parentheses.
 " rainbow_parentheses customization END
-
-Plugin 'scrooloose/nerdtree'
-" NERDTree customization START
-" automatically open NERDTree if vim started with no files specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" map Ctrl+n as a shortcut to open NERDTree
-map <C-n> :NERDTreeToggle<CR>
-" NERDTree customization END
 
 Plugin 'bling/vim-airline'
 " airline customization START
