@@ -29,9 +29,9 @@ Plug 'tpope/vim-vinegar'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Raimondi/delimitMate'
 
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 " ctrlp customization START
-let g:ctrlp_working_path_mode = 'ca'
+let g:ctrlp_working_path_mode = 'a'
 " ctrlp customization END
 
 Plug 'mhinz/vim-signify'
@@ -74,6 +74,8 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 " rainbow_parentheses customization END
+
+set number
 set cursorline
 set undofile
 set noswapfile
