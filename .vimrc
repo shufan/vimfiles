@@ -26,7 +26,10 @@ Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-vinegar'
-Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
+" vim-commentary customization START
+autocmd FileType c,cpp,h setlocal commentstring=//\ %s
+" vim-commentary customization END
 Plug 'Raimondi/delimitMate'
 
 Plug 'ctrlpvim/ctrlp.vim'
